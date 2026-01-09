@@ -16,6 +16,8 @@ let package = Package(
         .iOSApplication(
             name: "My App",
             targets: ["AppModule"],
+            bundleIdentifier: "ChoiceChamber",
+            teamIdentifier: "P5F7RZ3877",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .mic),
@@ -29,6 +31,9 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
+            ],
+            capabilities: [
+                .camera(purposeString: "Esse app usa a camera")
             ]
         )
     ],

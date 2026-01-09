@@ -1,12 +1,13 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    private let cameraManager = CameraManager()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
+        CameraPreviewView(session: cameraManager.session)
+            .onAppear {
+                cameraManager.start()
+            }
     }
 }
