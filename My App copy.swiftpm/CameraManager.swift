@@ -6,6 +6,7 @@ final class CameraManager: NSObject, ObservableObject {   // É uma classe do ti
 
     @Published var thumbPoint: CGPoint? = nil
     @Published var indexPoint: CGPoint? = nil
+    @Published var isNext: Bool = false
     
     let session = AVCaptureSession() // instancia uma AVCaptureSession dentro de session. orquestrando os inputs e outputs
     private let videoQueue = DispatchQueue(label: "camera.video.queue") // Cria uma instância constante videoQueue. Define em qual thread os frames da camera serão entregues
@@ -96,17 +97,31 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate { // Eu en
                 let dy = thumbTip.location.y - indexTip.location.y
                 let distance = sqrt(dx * dx + dy * dy)
                 
-                let pinchThreshold: CGFloat = 0.04 // Define a distância máxima para uma pinça
+                let pinchThreshold: CGFloat = 0.02 // Define a distância máxima para uma pinça
                 
                 if distance < pinchThreshold { // Se a distança entre os pontos do dedo indicador e dedão forem menor que 0.04 a pinça está fechada
-                    print("🤏 Pinça FECHADA")
+                    isPressed()
                 } else { // se não, está aberta.
-                    print("✋ Pinça ABERTA")
+                    isNotPressed()
+                    
                 }
                 
             } catch { // Se o vision não conseguir ser executado, ele vem pra cá, sinalizando o que o impediu de funcionar e analisar a mão.
                 print("Erro Vision: ", error)
             }
         }
+    
+        func isPressed() {
+            DispatchQueue.main.async {
+                print("🤏 Pinça FECHADA")
+                self.isNext = true
+            }
+        }
+    
+    func isNotPressed() {
+        DispatchQueue.main.async {
+            print("✋ Pinça ABERTA")
+            self.isNext = false
+        }
     }
-
+    }
