@@ -111,14 +111,14 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate { // Eu en
             }
         }
     
-        func isPressed() {
+        func isPressed() { // Fiz essa função para ser utilizada quando a pinça for realizada
             DispatchQueue.main.async {
                 print("🤏 Pinça FECHADA")
                 self.isNext = true
             }
         }
     
-    func isNotPressed() {
+    func isNotPressed() { // E Essa quando a pinça não estiver sendo feita
         DispatchQueue.main.async {
             print("✋ Pinça ABERTA")
             self.isNext = false
