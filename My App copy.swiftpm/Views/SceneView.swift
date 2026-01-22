@@ -16,6 +16,6 @@ struct SceneView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .landscapeLeft) {
     SceneView()
 }

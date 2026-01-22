@@ -67,7 +67,7 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate { // Eu en
         
         let handler = VNImageRequestHandler(  // Configuração do Vision para ele entender o que ele vai analisar, como e as opções?
             cvPixelBuffer: pixelBuffer,
-            orientation: .right,
+            orientation: .down,
             options: [:]
         )
         
@@ -123,5 +123,9 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate { // Eu en
             print("✋ Pinça ABERTA")
             self.isNext = false
         }
+    }
+    
+    private func visionOrientation() -> CGImagePropertyOrientation {
+        return .leftMirrored
     }
     }
