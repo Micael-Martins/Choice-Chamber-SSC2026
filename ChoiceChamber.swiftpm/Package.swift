@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "My App",
+    name: "Choice Chamber",
     platforms: [
         .iOS("18.1")
     ],
     products: [
         .iOSApplication(
-            name: "My App",
+            name: "Choice Chamber",
             targets: ["AppModule"],
             bundleIdentifier: "ChoiceChamber",
             teamIdentifier: "P5F7RZ3877",
