@@ -26,6 +26,8 @@ struct IntroViews: View {
                 let squareSize: CGFloat = geox * 0.08
                 
                 Color(.sceneBackground).ignoresSafeArea()
+                
+                // MARK: Text
                     
                     Text(introModel.dialogues[introModel.count].text)
                         .multilineTextAlignment(.leading)
@@ -37,6 +39,8 @@ struct IntroViews: View {
                         .frame(height: 200)
                         .opacity(introModel.isVisible ? 1.0 : 0.0)
                         .position(x: geox * 0.5, y: introModel.count > 2 ? geoy * 0.4 : geoy * 0.5)
+                
+                // MARK: Shapes
                    
                     if introModel.count > 2 {
                             
@@ -44,7 +48,6 @@ struct IntroViews: View {
                             .frame(width: introModel.count > 3 ? squareSize/2 : squareSize, height: introModel.count > 3 ? squareSize/2 : squareSize)
                                 .foregroundStyle(Color.white)
                                 .opacity(introModel.shape && introModel.count < 4 ? 1.0 : 0.0)
-//                                .rotationEffect(.degrees( rotating ? 360 : 0))
                                 .position(
                                     x: introModel.count > 3 ? geox * 0.48 : geox * 0.3,
                                     y: introModel.count > 3 ? geoy * 0.569 : geoy * 0.6)
@@ -73,12 +76,24 @@ struct IntroViews: View {
                                     
                                 }
                                 .foregroundStyle(introModel.count > 4 ? Color.green : Color.white)
-                                .shadow(color: Color.green, radius: introModel.count > 4 ? 100 : 0)
+                                .shadow(color: Color.green, radius: introModel.count > 4 ? 8 : 0)
                                 .opacity(introModel.shape ? 1.0 : 0.0)
                                 .position(
                                     x: introModel.count > 3 ? geox * 0.52 : geox * 0.7,
-                                    y: geoy * 0.6)
+                                    y: introModel.count > 5 ? geoy * 0.8 : geoy * 0.6)
                                 .animation(.easeInOut(duration: 1.0), value: introModel.count)
+                                .zIndex(1)
+                        
+                        // MARK: Bottom Base
+                        
+                        if introModel.count > 4 {
+                            Image(.base)
+                                .opacity(introModel.count > 5 ? 1 : 0)
+                                .position(x: geox * 0.5, y: geoy * 0.9)
+                                .animation(.easeInOut(duration: 1.0), value: introModel.count)
+                                .zIndex(0)
+                            
+                        }
                         
                         Button("Voltar") {
                             introModel.goBack( )

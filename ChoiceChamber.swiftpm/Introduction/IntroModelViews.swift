@@ -9,7 +9,7 @@ import SwiftUI
 
 final class IntroModelViews: ObservableObject {
     
-    @Published var count: Int = 0
+    @Published var count: Int = 6
     @Published var isVisible: Bool = true
     @Published var shape: Bool = false
     
