@@ -23,18 +23,18 @@ final class IntroModelViews: ObservableObject {
     func advanceDialogue() {
         guard count < 6 else { return }
         
-        withAnimation(.easeInOut(duration: 0.6)) {
+        withAnimation(.easeInOut(duration: count < 1 ? 2.0 : 0.6)) {
             isVisible = false
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + (count < 1 ? 3.0 : 0.6)) {
             if self.count < 6 {
                 self.count += 1
             } else {
                 // Alguma coisa no futuro
             }
 
-            withAnimation(.easeInOut(duration: 0.6)) {
+            withAnimation(.easeInOut(duration: self.count < 1 ? 2.0 : 0.6)) {
                 self.isVisible = true
             }
             

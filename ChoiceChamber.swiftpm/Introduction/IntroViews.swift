@@ -11,110 +11,98 @@ struct IntroViews: View {
     
     @StateObject private var introModel = IntroModelViews(dialogues: dialogues)
     @State var rotating: Bool = false
-    
-    let squareSize: CGFloat = 96
+    @State var square: Bool = true
+
     
     var body: some View {
 
         ZStack {
-            Color(.sceneBackground).ignoresSafeArea()
             
-            VStack {
+            GeometryReader { geo in
                 
-                Spacer()
+                let geox: CGFloat = geo.size.width
+                let geoy: CGFloat = geo.size.height
                 
-                Text(introModel.dialogues[introModel.count].text)
-                    .multilineTextAlignment(.leading)
-                    .lineSpacing(4)
-                    .font(.title)
-                    .foregroundStyle(Color.white)
-                    .padding(.horizontal, 128)
-                    .bold()
-                    .frame(height: 200)
-                    .opacity(introModel.isVisible ? 1.0 : 0.0)
-               
+                let squareSize: CGFloat = geox * 0.08
+                
+                Color(.sceneBackground).ignoresSafeArea()
+                    
+                    Text(introModel.dialogues[introModel.count].text)
+                        .multilineTextAlignment(.leading)
+                        .lineSpacing(4)
+                        .font(.title2)
+                        .foregroundStyle(Color.white)
+                        .padding(.horizontal, 128)
+                        .bold()
+                        .frame(height: 200)
+                        .opacity(introModel.isVisible ? 1.0 : 0.0)
+                        .position(x: geox * 0.5, y: introModel.count > 2 ? geoy * 0.4 : geoy * 0.5)
+                   
+                    if introModel.count > 2 {
+                            
+                            Rectangle()
+                            .frame(width: introModel.count > 3 ? squareSize/2 : squareSize, height: introModel.count > 3 ? squareSize/2 : squareSize)
+                                .foregroundStyle(Color.white)
+                                .opacity(introModel.shape && introModel.count < 4 ? 1.0 : 0.0)
+//                                .rotationEffect(.degrees( rotating ? 360 : 0))
+                                .position(
+                                    x: introModel.count > 3 ? geox * 0.48 : geox * 0.3,
+                                    y: introModel.count > 3 ? geoy * 0.569 : geoy * 0.6)
+                                .animation(.easeInOut(duration: 1.0), value: introModel.count)
 
-                if introModel.count <= 2 {
-                    Spacer()
-                }
-              
-                if introModel.count > 2 {
-                    HStack {
-                        Spacer()
-                        
-                        Rectangle()
-                            .frame(width: squareSize, height: squareSize)
-                            .foregroundStyle(Color.white)
-                            .opacity(introModel.shape ? 1.0 : 0.0)
-                            .rotationEffect(.degrees( rotating ? 360 : 0))
-                            .onAppear {
-                                withAnimation(
-                                    .linear(duration: 9)
-                                    .repeatForever(autoreverses: false)
-                                ) {
-                                    rotating = true
-                                }
-                            }
-                        
-                        if introModel.count > 2 && introModel.count < 6 {
-                            Spacer()
-                            Grid(horizontalSpacing: 0, verticalSpacing: 0) {
-                                
-// Lembrar de substituir isso aqui por componentes prontos futuramente
-                                GridRow {
-                                    Color.clear
-                                        .frame(width: squareSize/2, height: squareSize/2)
-                                    Rectangle()
-                                        .frame(width: squareSize/2, height: squareSize/2)
-                
-                                }
-                                
-                                GridRow {
-                                    Rectangle()
-                                        .frame(width: squareSize/2, height: squareSize/2)
-                                    Rectangle()
-                                        .frame(width: squareSize/2, height: squareSize/2)
-                                    Color.clear
-                                        .frame(width: squareSize/2, height: squareSize/2)
-                                }
-                                
-                            }
-                            .foregroundStyle(Color.white)
-                            .opacity(introModel.shape ? 1.0 : 0.0)
-                            .rotationEffect(.degrees(rotating ? 360 : 0))
-                            .onAppear {
-                                withAnimation(
-                                    .linear(duration: 9)
-                                    .repeatForever(autoreverses: false)
-                                ) {
-                                    rotating = true
-                                }
-                            }
-//                            .padding(.horizontal)
-                            
-                            
-                        }
-                        Spacer()
-                        
-                    }
+                                Grid(horizontalSpacing: 0, verticalSpacing: 0) {
+                                    
+    // Lembrar de substituir isso aqui por componentes prontos futuramente
+                                    GridRow {
+                                        Rectangle()
+                                            .frame(width: squareSize/2, height: squareSize/2)
+                                            .opacity(introModel.count > 3 ? 1 : 0)
+                                        Rectangle()
+                                            .frame(width: squareSize/2, height: squareSize/2)
                     
-                    Spacer()
-                    
-                    Button("Voltar") {
-                        introModel.goBack( )
-                        if introModel.count < 3 {
-                            introModel.shape = false
-                            rotating = false
+                                    }
+                                    
+                                    GridRow {
+                                        Rectangle()
+                                            .frame(width: squareSize/2, height: squareSize/2)
+                                        Rectangle()
+                                            .frame(width: squareSize/2, height: squareSize/2)
+                                        Color.clear
+                                            .frame(width: squareSize/2, height: squareSize/2)
+                                    }
+                                    
+                                }
+                                .foregroundStyle(introModel.count > 4 ? Color.green : Color.white)
+                                .shadow(color: Color.green, radius: introModel.count > 4 ? 100 : 0)
+                                .opacity(introModel.shape ? 1.0 : 0.0)
+                                .position(
+                                    x: introModel.count > 3 ? geox * 0.52 : geox * 0.7,
+                                    y: geoy * 0.6)
+                                .animation(.easeInOut(duration: 1.0), value: introModel.count)
+                        
+                        Button("Voltar") {
+                            introModel.goBack( )
+                            if introModel.count < 3 {
+                                introModel.shape = false
+                                rotating = false
+                            }
                         }
                     }
-                }
+//                }
             }
+            
         }.onTapGesture {
             introModel.advanceDialogue()
             
         }
         .onChange(of: introModel.count) {
             introModel.shapeAppear()
+            
+//            if introModel.count > 3 {
+//                withAnimation(.easeOut(duration: 0.5)) {
+//                    rotating = false
+//                }
+//            }
             
         }
     }

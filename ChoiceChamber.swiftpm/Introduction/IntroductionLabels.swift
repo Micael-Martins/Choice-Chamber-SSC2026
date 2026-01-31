@@ -20,11 +20,11 @@ let dialogues: [DialogueText] = [
     
     DialogueText(id: 3, text: "Welcome to Choice Chamber. All the choices that arise in our lives are recorded here."),
     
-    DialogueText(id: 4, text: "They arrive and take on different forms; some of them are simple, while others demand more attention."),
+    DialogueText(id: 4, text: "They arrive and take on different forms; some of them are simple, while other choices demand more attention."),
     
     DialogueText(id: 5, text: "Your task is to make a choice and take it to the base, turning it into a decision."),
     
-    DialogueText(id: 6, text: "You can make different choices, but once a decision is made, it’s not possible to go back."),
+    DialogueText(id: 6, text: "You can make different choices, but once you decide something, it’s not possible to go back."),
     
     DialogueText(id: 7, text: "So... shall we begin?")
 ]
