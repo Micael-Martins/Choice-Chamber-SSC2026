@@ -9,19 +9,21 @@ import SwiftUI
 
 final class IntroModelViews: ObservableObject {
     
-    @Published var count: Int = 6
+    @Published var count: Int = 0
     @Published var isVisible: Bool = true
     @Published var shape: Bool = false
+
     
     
     let dialogues: [DialogueText]
+    var finish: (() -> Void)?
     
     init (dialogues: [DialogueText]) {
         self.dialogues = dialogues
     }
     
     func advanceDialogue() {
-        guard count < 6 else { return }
+
         
         withAnimation(.easeInOut(duration: count < 1 ? 2.0 : 0.6)) {
             isVisible = false
@@ -31,7 +33,7 @@ final class IntroModelViews: ObservableObject {
             if self.count < 6 {
                 self.count += 1
             } else {
-                // Alguma coisa no futuro
+                self.finish?()
             }
 
             withAnimation(.easeInOut(duration: self.count < 1 ? 2.0 : 0.6)) {

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct SceneView: View {
+struct StartView: View {
+    @Binding var route: Navigation
     
     var body: some View {
         ZStack {
@@ -50,10 +51,14 @@ struct SceneView: View {
                         
                 }
             }
+        }.onTapGesture {
+            withAnimation(.easeInOut(duration: 2)) {
+                route = .Introduction
+            }
         }
     }
 }
 
 #Preview(traits: .landscapeLeft) {
-    SceneView()
+    StartView(route: .constant(.StartPage))
 }

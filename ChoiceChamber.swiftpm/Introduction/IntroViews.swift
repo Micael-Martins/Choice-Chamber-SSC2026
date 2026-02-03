@@ -12,6 +12,7 @@ struct IntroViews: View {
     @StateObject private var introModel = IntroModelViews(dialogues: dialogues)
     @State var rotating: Bool = false
     @State var square: Bool = true
+    @Binding var route: Navigation
 
     
     var body: some View {
@@ -113,17 +114,18 @@ struct IntroViews: View {
         .onChange(of: introModel.count) {
             introModel.shapeAppear()
             
-//            if introModel.count > 3 {
-//                withAnimation(.easeOut(duration: 0.5)) {
-//                    rotating = false
-//                }
-//            }
-            
+        }
+        .onAppear {
+            introModel.finish = {
+                withAnimation {
+                    route = .Game
+                }
+            }
         }
     }
 }
 
 
 #Preview (traits: .landscapeLeft){
-    IntroViews()
+    IntroViews(route: .constant(.Introduction))
 }
