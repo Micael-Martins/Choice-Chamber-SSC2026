@@ -107,22 +107,36 @@ class ChoiceGameModel {
                 return true
     }
     
-    //Valida limites de matriz e colisões
-    private func canPlace(shape: Shape, at origin: GridPoint) -> Bool {
-        for block in shape.blocks {
-            let targetX = origin.x + block.x
-            let targetY = origin.y + block.y
-                        
-            if targetX < 0 || targetX >= columns || targetY < 0 || targetY >= rows {
-            return false
+    // Valida limites de matriz, colisões e suporte (gravidade)
+        private func canPlace(shape: Shape, at origin: GridPoint) -> Bool {
+            var hasSupport = false // Rastreador para saber se a peça está apoiada
+            
+            for block in shape.blocks {
+                let targetX = origin.x + block.x
+                let targetY = origin.y + block.y
+                            
+                // 1. Verificação de Limites (Paredes e Teto/Chão)
+                if targetX < 0 || targetX >= columns || targetY < 0 || targetY >= rows {
+                    return false
+                }
+                            
+                // 2. Verificação de Colisão (Sobreposição)
+                if grid[targetY][targetX] != nil {
+                    return false
+                }
+                
+                // 3. Verificação de Suporte (Gravidade)
+                // Se o bloco toca o chão (0) OU se a célula logo abaixo dele não está vazia
+                if targetY == 0 {
+                    hasSupport = true
+                } else if grid[targetY - 1][targetX] != nil {
+                    hasSupport = true
+                }
             }
-                        
-            if grid[targetY][targetX] != nil {
-            return false
-            }
+            
+            // A peça só pode ser colocada se não colidir E tiver pelo menos um ponto de apoio
+            return hasSupport
         }
-        return true
-    }
     
     // Calcula a linha mais alta que possui um bloco posicionado
         var highestOccupiedRow: Int {
