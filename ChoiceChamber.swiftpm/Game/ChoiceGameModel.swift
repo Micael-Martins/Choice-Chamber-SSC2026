@@ -19,8 +19,8 @@ class ChoiceGameModel {
     
     //Estado do jogo
     var currentShapes: [Shape] = []
-    var placedPiecesCount: Int = 12
-    var isEnded: Bool = true
+    var placedPiecesCount: Int = 0
+    var isEnded: Bool = false
     
     //Organizando textos
     var isVisible: Bool = false
@@ -65,6 +65,8 @@ class ChoiceGameModel {
             }
         }
     }
+    
+    //MARK: Tower Management
     
     //Inicializando a classe
     init() {
@@ -121,4 +123,46 @@ class ChoiceGameModel {
         }
         return true
     }
+    
+    // Calcula a linha mais alta que possui um bloco posicionado
+        var highestOccupiedRow: Int {
+            for row in (0..<rows).reversed() {
+                for col in 0..<columns {
+                    if grid[row][col] != nil {
+                        return row + 1 // +1 porque a base (linha 0) tem altura 1
+                    }
+                }
+            }
+            return 0 // Torre vazia
+        }
+    
+    // MARK: - Funções de Apoio para a view
+    func handleDrop(location: CGPoint, shape: Shape, blockSize: CGFloat, geox: CGFloat, geoy: CGFloat) {
+        
+        // 1. Onde a grid começa visualmente
+        let gridLeftEdge = (geox * 0.5) - (CGFloat(columns) * blockSize / 2)
+        
+        // 2. Onde o Chão (linha 0) está visualmente agora?
+        // Precisamos espelhar a matemática da câmera que fizemos no Passo 2
+        let offsetRows = max(0, highestOccupiedRow - 2)
+        let gridBottomEdge = (geoy * 0.9) + (CGFloat(offsetRows) * blockSize)
+
+        // 3. Ajuste do Centro para a Quina (Facilita arredondar para a matriz)
+        let blockLeftX = location.x - (blockSize / 2)
+        let blockBottomY = location.y + (blockSize / 2) // O Y visual cresce para baixo
+        
+        // 4. 'round' age como um imã, puxando para a linha/coluna mais próxima
+        let col = Int(round((blockLeftX - gridLeftEdge) / blockSize))
+        let row = Int(round((gridBottomEdge - blockBottomY) / blockSize))
+        
+        let dropPoint = GridPoint(x: col, y: row)
+        let success = place(shape: shape, at: dropPoint)
+        
+        if success {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        } else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+        }
+    }
+    
 }

@@ -13,12 +13,24 @@ struct GridPoint: Hashable {
     var y: Int // Define a linha atual
 }
 
+// Produz cores aleatórias sempre com uma cor mais viva.
 extension Color {
     static func random() -> Color {
-        let red = Double.random(in: 0...1)
-        let green = Double.random(in: 0...1)
-        let blue = Double.random(in: 0...1)
-        return Color(red: red, green: green, blue: blue)
+        func strongSaturation() -> Double {
+            Double.random(in: 0.85...1.0)
+        }
+        
+        func strongBrightness() -> Double {
+            Double.random(in: 0.9...1.0)
+        }
+        
+        let hue = Double.random(in: 0...1)
+        
+        return Color(
+            hue: hue,
+            saturation: strongSaturation(),
+            brightness: strongBrightness()
+        )
     }
 }
 

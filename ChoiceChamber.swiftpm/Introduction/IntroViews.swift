@@ -41,7 +41,7 @@ struct IntroViews: View {
                         .opacity(introModel.isVisible ? 1.0 : 0.0)
                         .position(x: geox * 0.5, y: introModel.count > 2 ? geoy * 0.40 : geoy * 0.45)
                 
-                // MARK: Shapes
+                // MARK: - Shapes
                    
                     if introModel.count > 2 {
                             
@@ -52,7 +52,7 @@ struct IntroViews: View {
                                 .position(
                                     x: introModel.count > 3 ? geox * 0.48 : geox * 0.3,
                                     y: introModel.count > 3 ? geoy * 0.569 : geoy * 0.6)
-                                .animation(.easeInOut(duration: 1.0), value: introModel.count)
+                                .animation(.spring(duration: 1.0), value: introModel.count)
 
                                 Grid(horizontalSpacing: 0, verticalSpacing: 0) {
                                     
@@ -71,8 +71,6 @@ struct IntroViews: View {
                                             .frame(width: squareSize/2, height: squareSize/2)
                                         Rectangle()
                                             .frame(width: squareSize/2, height: squareSize/2)
-                                        Color.clear
-                                            .frame(width: squareSize/2, height: squareSize/2)
                                     }
                                     
                                 }
@@ -82,10 +80,10 @@ struct IntroViews: View {
                                 .position(
                                     x: introModel.count > 3 ? geox * 0.52 : geox * 0.7,
                                     y: introModel.count > 5 ? geoy * 0.8 : geoy * 0.6)
-                                .animation(.easeInOut(duration: 1.0), value: introModel.count)
+                                .animation(.spring(duration: 1.0), value: introModel.count)
                                 .zIndex(1)
                         
-                        // MARK: Bottom Base
+                        // MARK: - Bottom Base
                         
                         if introModel.count > 4 {
                             Image(.base)
