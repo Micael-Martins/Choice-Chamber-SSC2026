@@ -54,6 +54,7 @@ struct StartView: View {
         }.onTapGesture {
             withAnimation(.easeInOut(duration: 2)) {
                 route = .Introduction
+                
             }
         }
     }

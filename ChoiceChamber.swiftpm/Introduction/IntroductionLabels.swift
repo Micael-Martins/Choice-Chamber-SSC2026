@@ -12,7 +12,7 @@ struct DialogueText: Identifiable {
 
 let dialogues: [DialogueText] = [
     
-    // MARK: Introduction Labels 1 - 7
+    // MARK: Introduction Labels
     
     DialogueText(id: 1, text: "The experience was created based on the theme “Choices” and offers an interaction in which each action generates a different outcome. The shapes may change or not respond exactly to commands to make everything more playful, encouraging you to experiment with different combinations."),
     

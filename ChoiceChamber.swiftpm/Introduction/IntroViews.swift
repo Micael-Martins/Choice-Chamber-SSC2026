@@ -39,7 +39,7 @@ struct IntroViews: View {
                         .bold()
                         .frame(height: 200)
                         .opacity(introModel.isVisible ? 1.0 : 0.0)
-                        .position(x: geox * 0.5, y: introModel.count > 2 ? geoy * 0.4 : geoy * 0.5)
+                        .position(x: geox * 0.5, y: introModel.count > 2 ? geoy * 0.40 : geoy * 0.45)
                 
                 // MARK: Shapes
                    

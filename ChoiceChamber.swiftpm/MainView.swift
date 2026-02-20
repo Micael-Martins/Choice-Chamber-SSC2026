@@ -27,7 +27,7 @@ struct MainView: View {
                 
             case .Game:
                 ChoiceGame(route: $route)
-                    .transition(.opacity)
+                    .transition(.identity)
             }
         }
         .animation(.easeInOut(duration: 3), value: route)
