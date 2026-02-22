@@ -19,7 +19,7 @@ class ChoiceGameModel {
     
     //Estado do jogo
     var currentShapes: [Shape] = []
-    var placedPiecesCount: Int = 13
+    var placedPiecesCount: Int = 0
     var isEnded: Bool = false
     
     //Organizando textos
@@ -56,7 +56,7 @@ class ChoiceGameModel {
     }
     
     func animateDialogue() {
-        withAnimation(.easeInOut(duration: placedPiecesCount < 16 ? 0.6 : 0.0 )){
+        withAnimation(.easeInOut(duration: placedPiecesCount < 15 ? 0.8 : 0.0 )){
             isVisible = false
         }
         
@@ -89,6 +89,10 @@ class ChoiceGameModel {
         currentShapes = Shape.generateTrio()
     }
     
+    func generateCrazyShapes() {
+        currentShapes = Shape.generateCrazyShape()
+    }
+    
     //Posicionamento de peças
     func place(shape: Shape, at origin: GridPoint) -> Bool {
         guard canPlace(shape: shape, at: origin) else { return false}
@@ -105,7 +109,11 @@ class ChoiceGameModel {
             endButton = true
             
         } else {
-            generateNewShapes()
+            if placedPiecesCount == 6 {
+                generateCrazyShapes()
+            } else {
+                generateNewShapes()
+            }
         }
                 return true
     }

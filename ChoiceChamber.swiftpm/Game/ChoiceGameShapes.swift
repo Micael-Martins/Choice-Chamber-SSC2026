@@ -44,7 +44,7 @@ struct Shape: Identifiable {
             
             // Quadrado
             Shape(blocks: [GridPoint(x: 0, y: 0)],
-                    color: Color.random()),
+                  color: Color.random()),
             
             //Retângulo de 3 de largura
             Shape(blocks: [GridPoint(x: 0, y: 0),
@@ -54,10 +54,10 @@ struct Shape: Identifiable {
             
             // Forma L
             Shape(blocks: [GridPoint(x: 0, y: 0),
-                                GridPoint(x: 0, y: 1),
-                                GridPoint(x: 0, y: 2),
-                                GridPoint(x: 1, y: 0)],
-                    color: Color.random()),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 0, y: 2),
+                           GridPoint(x: 1, y: 0)],
+                  color: Color.random()),
             
             //Forma L apontando para a esquerda
             Shape(blocks: [GridPoint(x: 0, y: 0),
@@ -82,53 +82,123 @@ struct Shape: Identifiable {
             
             // Forma I - Vertical (pequeno)
             Shape(blocks: [GridPoint(x: 0, y: 0),
-                                GridPoint(x: 0, y: 1)],
-                    color: Color.random()),
+                           GridPoint(x: 0, y: 1)],
+                  color: Color.random()),
             
             // Forma I - Horizontal (pequeno)
             Shape(blocks: [GridPoint(x: 0, y: 0),
-                                GridPoint(x: 1, y: 0)],
-                    color: Color.random()),
+                           GridPoint(x: 1, y: 0)],
+                  color: Color.random()),
             
             // Forma < - Aberta para a direita
             Shape(blocks: [GridPoint(x: 0, y: 0),
-                                GridPoint(x: 0, y: 1),
-                                GridPoint(x: 1, y: 1)],
-                    color: Color.random()),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 1)],
+                  color: Color.random()),
             
             // Forma > - Aberta para a esquerda
             Shape(blocks: [GridPoint(x: 0, y: 1),
-                                GridPoint(x: 1, y: 1),
-                                GridPoint(x: 1, y: 0)],
-                    color: Color.random()),
-
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 0)],
+                  color: Color.random()),
+            
             // Forma < invertida (apontando para baixo)
             Shape(blocks: [GridPoint(x: 1, y: 0),
-                                GridPoint(x: 0, y: 1),
-                                GridPoint(x: 1, y: 1)],
-                    color: Color.random()),
-
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 1)],
+                  color: Color.random()),
+            
             // Forma > invertida (apontando para baixo)
             Shape(blocks: [GridPoint(x: 0, y: 0),
-                                GridPoint(x: 0, y: 1),
-                                GridPoint(x: 1, y: 1)],
-                    color: Color.random()),
-
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 1)],
+                  color: Color.random()),
+            
             // Forma S deitada, aberta para cima
             Shape(blocks: [GridPoint(x: 0, y: 0),
-                                GridPoint(x: 1, y: 0),
-                                GridPoint(x: 1, y: 1),
-                                GridPoint(x: 2, y: 1)],
-                    color: Color.random()),
-
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 2, y: 1)],
+                  color: Color.random()),
+            
             // Forma S deitada, aberta para baixo
             Shape(blocks: [GridPoint(x: 1, y: 0),
-                                GridPoint(x: 2, y: 0),
-                                GridPoint(x: 0, y: 1),
-                                GridPoint(x: 1, y: 1)],
-                    color: Color.random())
+                           GridPoint(x: 2, y: 0),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 1)],
+                  color: Color.random())
         ]
         // Retorna 3 formas
+        return Array(possibleShapes.shuffled().prefix(3))
+    }
+    
+    static func generateCrazyShape() -> [Shape] {
+        let possibleShapes: [Shape] = [
+            
+            // Forma maluca - Braço de boneco de neve para a esquerda.
+            Shape(blocks: [GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 2, y: 2)],
+                  color: Color.random()),
+            
+            // Forma maluca - Braço de boneco de neve para a direita
+            Shape(blocks: [GridPoint(x:0, y: 2),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 2, y: 1)],
+                  color: Color.random()),
+            
+            // Forma maluca - S gigante pra cima - esquerda
+            Shape(blocks: [GridPoint(x: 0, y: 0),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 1, y: 3)],
+                  color: Color.random()),
+            
+            // Forma maluca - S gigante pra cima - direita
+            Shape(blocks: [GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 0, y: 2),
+                           GridPoint(x: 0, y: 3)],
+                  color: Color.random()),
+            
+            // Forma maluca - T Gigante
+            Shape(blocks: [GridPoint(x: 0, y: 2),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 2, y: 2)],
+                  color: Color.random()),
+            
+            // Forma maluca - Mais "+"
+            Shape(blocks: [GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 2, y: 1)],
+                  color: Color.random()),
+            
+            // Forma maluca - "p"
+            Shape(blocks: [GridPoint(x: 0, y: 0),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 2, y: 2)],
+                  color: Color.random()),
+            
+            // Forma maluca - "p" reverso
+            Shape(blocks: [GridPoint(x: 0, y: 2),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 2, y: 0),
+                           GridPoint(x: 2, y: 1)],
+                  color: Color.random())
+        ]
         return Array(possibleShapes.shuffled().prefix(3))
     }
 }
