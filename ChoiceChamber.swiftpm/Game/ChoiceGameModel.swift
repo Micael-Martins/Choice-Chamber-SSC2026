@@ -19,16 +19,20 @@ class ChoiceGameModel {
     
     //Estado do jogo
     var currentShapes: [Shape] = []
-    var placedPiecesCount: Int = 0
+    var placedPiecesCount: Int = 13
     var isEnded: Bool = false
     
     //Organizando textos
     var isVisible: Bool = false
     var displayedDialogue: InGameText?
+    var endButton: Bool = false
     
     //MARK: Label Management
     
     var currentDialogue: InGameText {
+        if isEnded {
+            return .end
+        }
         switch placedPiecesCount {
         case 0...1:
             return .tutorial
@@ -46,10 +50,8 @@ class ChoiceGameModel {
             return .danger
         case 15:
             return .faith
-        case 2...3, 5, 7, 9, 12...13:
-            return .null
         default:
-            return .end
+            return .null
         }
     }
     
@@ -74,6 +76,7 @@ class ChoiceGameModel {
         generateNewShapes()
         self.displayedDialogue = self.currentDialogue
         self.isVisible = false
+        self.grid[0][1] = .green
         DispatchQueue.main.async {
             withAnimation(.easeInOut(duration: 0.6)) {
                 self.isVisible = true
@@ -99,11 +102,11 @@ class ChoiceGameModel {
         placedPiecesCount += 1
         
         if placedPiecesCount == maxShapes {
-                    isEnded = true
-                } else {
-                    generateNewShapes()
-                }
-                
+            endButton = true
+            
+        } else {
+            generateNewShapes()
+        }
                 return true
     }
     

@@ -24,7 +24,7 @@ struct ChoiceGame: View {
                 Color(.sceneBackground).ignoresSafeArea()
                 
                 // MARK: - Labels
-                if let dialogue = model.displayedDialogue {
+                if model.isVisible, let dialogue = model.displayedDialogue {
                     Text(dialogue.text)
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
@@ -32,20 +32,20 @@ struct ChoiceGame: View {
                         .foregroundStyle(Color.white)
                         .bold()
                         .position(
-                            x: model.placedPiecesCount != 16 ? geox * 0.5 : geox * 0.75,
-                            y: model.placedPiecesCount != 16 ? geoy * 0.15 : geoy * 0.4)
+                            x:  !model.isEnded ? geox * 0.5 : geox * 0.75,
+                            y:  !model.isEnded ? geoy * 0.15 : geoy * 0.4)
                         .padding()
-                        .opacity(model.isVisible ? 1.0 : 0)
-                        .frame(width: model.placedPiecesCount != 16 ? 800 : 400,
+                        .frame(width: !model.isEnded ? 800 : 400,
                                 height: 400)
-
+                        .transition(.opacity)
                 }
-                
                 
                     // MARK: - Tower Base
                 Group {
                     Image(.base)
-                        .position(x: geox * 0.5, y: geoy * 0.9)
+                        .position(x: model.isEnded ? geox * 0.1 : geox * 0.5,
+                                  y: model.isEnded ? geoy * 1.4 : geoy * 0.9)
+                        .scaleEffect(model.isEnded ? 0.5 : 1.0)
                     
                     // MARK: Tower Grid
                     VStack(spacing: 0) {
@@ -54,14 +54,17 @@ struct ChoiceGame: View {
                                 ForEach(0..<model.columns, id: \.self) { col in
                                     ZStack {
                                         Rectangle()
-                                            .stroke(row < 2 ? Color.white.opacity(0.05) : Color.white.opacity(0.00) , lineWidth: 1)
-                                            .frame(width: blockSize, height: blockSize)
+                                            .stroke(row < 2 && model.placedPiecesCount < 3 ? Color.white.opacity(0.05)
+                                                    : Color.white.opacity(0.00) , lineWidth: 1)
+                                            .frame(width: !model.isEnded ? blockSize : blockSize / 2,
+                                                   height: !model.isEnded ? blockSize : blockSize / 2)
                                         
                                         if let pieceColor = model.grid[row][col] {
                                             Rectangle()
                                                 .fill(pieceColor)
-                                                .frame(width: blockSize, height: blockSize)
-                                                .shadow(color: pieceColor, radius: 10)
+                                                .frame(width: !model.isEnded ? blockSize : blockSize / 2,
+                                                       height: !model.isEnded ? blockSize : blockSize / 2)
+                                                .shadow(color: pieceColor, radius: 4)
                                         }
                                     }
                                 }
@@ -69,15 +72,35 @@ struct ChoiceGame: View {
                         }
                     }
                     .position(
-                        x: geox * 0.5,
-                        y: (geoy * 0.9) - (CGFloat(model.rows) * blockSize / 2)
+                        x: !model.isEnded ? geox * 0.5 : geox * 0.30,
+                        y: {
+                            let baseY = !model.isEnded ? geoy * 0.9 : geoy * 0.95
+                            let effectiveBlockSize = !model.isEnded ? blockSize : blockSize / 2
+                            let gridHeight = CGFloat(model.rows) * effectiveBlockSize
+                            return baseY - gridHeight / 2
+                        }()
                     )
                 }
-                .offset(y: CGFloat(max(0, model.highestOccupiedRow - 2)) * blockSize)
-                .animation(.spring(response: 0.8, dampingFraction: 0.8), value: model.highestOccupiedRow)
+                .offset(y: !model.isEnded ? CGFloat(max(0, model.highestOccupiedRow - 2)) * blockSize : 0)
+                .animation(.spring(response: !model.isEnded ? 0.8 : 2.0), value: model.highestOccupiedRow)
                 
-                // MARK: Choices Area (Topo da tela)
-                if !model.isEnded {
+                if model.endButton {
+                    Button {
+                        withAnimation(.easeInOut(duration: 2.0)) {
+                            model.isEnded = true
+                        }
+                    } label: {
+                        Image(systemName: "minus.magnifyingglass")
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 48))
+                            .bold()
+                    }.position(x: geox * 0.9, y: geoy * 0.9)
+                        .transition(.scale.combined(with: .opacity))
+                        .animation(.spring(response: 0.8, dampingFraction: 0.7), value: model.endButton)
+                }
+                
+                // MARK: - Choices Area (Topo da tela)
+                if model.placedPiecesCount <= 14 {
                     HStack(spacing: geox * 0.05) {
                         ForEach(model.currentShapes) { shape in
                             DraggableShapeView(shape: shape, blockSize: blockSize) { dropLocation in

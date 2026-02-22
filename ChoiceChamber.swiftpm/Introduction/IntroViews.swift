@@ -56,7 +56,7 @@ struct IntroViews: View {
 
                                 Grid(horizontalSpacing: 0, verticalSpacing: 0) {
                                     
-    // Lembrar de substituir isso aqui por componentes prontos futuramente
+
                                     GridRow {
                                         Rectangle()
                                             .frame(width: squareSize/2, height: squareSize/2)
@@ -78,8 +78,8 @@ struct IntroViews: View {
                                 .shadow(color: Color.green, radius: introModel.count > 4 ? 8 : 0)
                                 .opacity(introModel.shape ? 1.0 : 0.0)
                                 .position(
-                                    x: introModel.count > 3 ? geox * 0.52 : geox * 0.7,
-                                    y: introModel.count > 5 ? geoy * 0.8 : geoy * 0.6)
+                                    x: introModel.count > 3 ? geox * 0.50 : geox * 0.7,
+                                    y: introModel.count > 5 ? geoy * 0.85 : geoy * 0.6)
                                 .animation(.spring(duration: 1.0), value: introModel.count)
                                 .zIndex(1)
                         

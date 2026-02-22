@@ -46,6 +46,12 @@ struct Shape: Identifiable {
             Shape(blocks: [GridPoint(x: 0, y: 0)],
                     color: Color.random()),
             
+            //Retângulo de 3 de largura
+            Shape(blocks: [GridPoint(x: 0, y: 0),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 2, y: 0)],
+                  color: Color.random()),
+            
             // Forma L
             Shape(blocks: [GridPoint(x: 0, y: 0),
                                 GridPoint(x: 0, y: 1),
@@ -53,15 +59,30 @@ struct Shape: Identifiable {
                                 GridPoint(x: 1, y: 0)],
                     color: Color.random()),
             
+            //Forma L apontando para a esquerda
+            Shape(blocks: [GridPoint(x: 0, y: 0),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2)],
+                  color: Color.random()),
+            
+            // Forma L de cabeça para baixo ( Direita )
+            Shape(blocks: [GridPoint(x: 0, y: 0),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 0, y: 2),
+                           GridPoint(x: 1, y: 2)],
+                  color: Color.random()),
+            
+            // Forma L de cabeça para baixo ( Esquerda )
+            Shape(blocks: [GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 0, y: 2)],
+                  color: Color.random()),
+            
             // Forma I - Vertical (pequeno)
             Shape(blocks: [GridPoint(x: 0, y: 0),
                                 GridPoint(x: 0, y: 1)],
-                    color: Color.random()),
-            
-            // Forma I - Vertical (grande)
-            Shape(blocks: [GridPoint(x: 0, y: 0),
-                                GridPoint(x: 0, y: 1),
-                                GridPoint(x: 0, y: 2)],
                     color: Color.random()),
             
             // Forma I - Horizontal (pequeno)
@@ -107,6 +128,7 @@ struct Shape: Identifiable {
                                 GridPoint(x: 1, y: 1)],
                     color: Color.random())
         ]
+        // Retorna 3 formas
         return Array(possibleShapes.shuffled().prefix(3))
     }
 }
