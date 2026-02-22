@@ -84,7 +84,7 @@ struct ChoiceGame: View {
                 .offset(y: !model.isEnded ? CGFloat(max(0, model.highestOccupiedRow - 2)) * blockSize : 0)
                 .animation(.spring(response: !model.isEnded ? 0.8 : 2.0), value: model.highestOccupiedRow)
                 
-                if model.endButton {
+                if model.endButton && model.isEnded == false {
                     Button {
                         withAnimation(.easeInOut(duration: 2.0)) {
                             model.isEnded = true
@@ -97,6 +97,19 @@ struct ChoiceGame: View {
                     }.position(x: geox * 0.9, y: geoy * 0.9)
                         .transition(.scale.combined(with: .opacity))
                         .animation(.spring(response: 0.8, dampingFraction: 0.7), value: model.endButton)
+                }
+                
+                if model.isEnded {
+                    Button {
+                        withAnimation(.easeInOut(duration: 2.0)) {
+                            route = .StartPage
+                        }
+                    } label: {
+                        Image(systemName: "play.fill")
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 48))
+                            .bold()
+                    }.position(x: geox * 0.9, y: geoy * 0.9)
                 }
                 
                 // MARK: - Choices Area (Topo da tela)
