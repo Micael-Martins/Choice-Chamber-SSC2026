@@ -15,6 +15,7 @@ struct IntroViews: View {
     @Binding var route: Navigation
 
     
+    
     var body: some View {
 
         ZStack {

@@ -13,6 +13,7 @@ struct ChoiceGame: View {
     
     @State var model = ChoiceGameModel()
     @State var finish = false
+    @State private var shakeTower = false
     
     var body: some View {
         ZStack {
@@ -56,14 +57,14 @@ struct ChoiceGame: View {
                                         Rectangle()
                                             .stroke(row < 2 && model.placedPiecesCount < 3 ? Color.white.opacity(0.05)
                                                     : Color.white.opacity(0.00) , lineWidth: 1)
-                                            .frame(width: !model.isEnded ? blockSize : blockSize / 2,
-                                                   height: !model.isEnded ? blockSize : blockSize / 2)
+                                            .frame(width: !model.isEnded ? blockSize : blockSize / 4,
+                                                   height: !model.isEnded ? blockSize : blockSize / 4)
                                         
                                         if let pieceColor = model.grid[row][col] {
                                             Rectangle()
                                                 .fill(pieceColor)
-                                                .frame(width: !model.isEnded ? blockSize : blockSize / 2,
-                                                       height: !model.isEnded ? blockSize : blockSize / 2)
+                                                .frame(width: !model.isEnded ? blockSize : blockSize / 4,
+                                                       height: !model.isEnded ? blockSize : blockSize / 4)
                                                 .shadow(color: pieceColor, radius: 4)
                                         }
                                     }
@@ -75,14 +76,14 @@ struct ChoiceGame: View {
                         x: !model.isEnded ? geox * 0.5 : geox * 0.30,
                         y: {
                             let baseY = !model.isEnded ? geoy * 0.9 : geoy * 0.95
-                            let effectiveBlockSize = !model.isEnded ? blockSize : blockSize / 2
+                            let effectiveBlockSize = !model.isEnded ? blockSize : blockSize / 4
                             let gridHeight = CGFloat(model.rows) * effectiveBlockSize
                             return baseY - gridHeight / 2
                         }()
                     )
                 }
                 .offset(y: !model.isEnded ? CGFloat(max(0, model.highestOccupiedRow - 2)) * blockSize : 0)
-                .animation(.spring(response: !model.isEnded ? 0.8 : 2.0), value: model.highestOccupiedRow)
+                .animation(.spring(response: 2.0, dampingFraction: 0.8), value: model.highestOccupiedRow)
                 
                 if model.endButton && model.isEnded == false {
                     Button {
@@ -129,7 +130,7 @@ struct ChoiceGame: View {
                     .position(x: geox * 0.5, y: geoy * 0.35) // Posiciona no topo
                     .zIndex(2) // Garante que as peças flutuem por cima do texto e da torre
                 }
-            }
+            }.coordinateSpace(name: "GameSpace")
         }.onChange(of: model.currentDialogue) {
             model.animateDialogue()
         }.onChange(of: finish) {

@@ -39,12 +39,12 @@ struct DraggableShapeView: View {
         // Lemos a posição global exata do bloco (0,0) ao surgir na tela
             .background(GeometryReader { geo in
                 Color.clear.onAppear {
-                    initialCenter = CGPoint(x: geo.frame(in: .global).midX, y: geo.frame(in: .global).midY)
+                    initialCenter = CGPoint(x: geo.frame(in: .named("GameSpace")).midX, y: geo.frame(in: .global).midY)
                 }
             })
             .offset(dragOffset)
             .gesture(
-                DragGesture(coordinateSpace: .global)
+                DragGesture(coordinateSpace: .named("GameSpace"))
                     .onChanged { value in
                         withAnimation(.interactiveSpring(response: 0.3, dampingFraction: 0.7)) {
                             dragOffset = value.translation

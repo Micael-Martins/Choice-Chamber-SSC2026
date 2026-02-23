@@ -19,7 +19,7 @@ class ChoiceGameModel {
     
     //Estado do jogo
     var currentShapes: [Shape] = []
-    var placedPiecesCount: Int = 0
+    var placedPiecesCount: Int = 9
     var isEnded: Bool = false
     
     //Organizando textos
@@ -111,7 +111,11 @@ class ChoiceGameModel {
         } else {
             if placedPiecesCount == 6 {
                 generateCrazyShapes()
-            } else {
+            }
+            else if placedPiecesCount == 10 {
+                shuffleShapesQuickly()
+            }
+            else {
                 generateNewShapes()
             }
         }
@@ -188,6 +192,23 @@ class ChoiceGameModel {
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
+    }
+    
+    func shuffleShapesQuickly(for duration: TimeInterval = 12.0) {
+        let startTime = Date()
+        var interval: TimeInterval = 0.01
+        func shuffleStep() {
+            generateNewShapes()
+            interval += 0.005
+            let totalTime = Date().timeIntervalSince(startTime)
+            if totalTime < duration {
+                DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
+                    shuffleStep()
+                }
+            }
+            // Quando terminar, pode fazer outra ação se quiser
+        }
+        shuffleStep()
     }
     
 }
