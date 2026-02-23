@@ -126,6 +126,20 @@ struct Shape: Identifiable {
                            GridPoint(x: 2, y: 0),
                            GridPoint(x: 0, y: 1),
                            GridPoint(x: 1, y: 1)],
+                  color: Color.random()),
+            
+            // Forma S em pé, para a direita
+            Shape(blocks: [GridPoint(x: 0, y: 0),
+                           GridPoint(x: 0, y: 1),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2)],
+                  color: Color.random()),
+            
+            // Forma S em pé, para a esquerda
+            Shape(blocks: [GridPoint(x: 0, y: 1),
+                           GridPoint(x: 0, y: 2),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 0)],
                   color: Color.random())
         ]
         // Retorna 3 formas
@@ -197,7 +211,25 @@ struct Shape: Identifiable {
                            GridPoint(x: 1, y: 2),
                            GridPoint(x: 2, y: 0),
                            GridPoint(x: 2, y: 1)],
+                  color: Color.random()),
+            
+            // Forma maluca - "s" gigante Direita
+            Shape(blocks: [GridPoint(x: 0, y: 2),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 2, y: 0)],
+                  color: Color.random()),
+            
+            // Forma maluca - "s" gigante Esquerda
+            Shape(blocks: [GridPoint(x: 0, y: 0),
+                           GridPoint(x: 1, y: 0),
+                           GridPoint(x: 1, y: 1),
+                           GridPoint(x: 1, y: 2),
+                           GridPoint(x: 2, y: 2)],
                   color: Color.random())
+            
+            
         ]
         return Array(possibleShapes.shuffled().prefix(3))
     }

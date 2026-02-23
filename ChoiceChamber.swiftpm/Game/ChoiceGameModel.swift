@@ -19,7 +19,7 @@ class ChoiceGameModel {
     
     //Estado do jogo
     var currentShapes: [Shape] = []
-    var placedPiecesCount: Int = 9
+    var placedPiecesCount: Int = 0
     var isEnded: Bool = false
     
     //Organizando textos
@@ -36,6 +36,8 @@ class ChoiceGameModel {
         switch placedPiecesCount {
         case 0...1:
             return .tutorial
+        case 2...3:
+            return .intro
         case 4:
             return .beginning
         case 6:
@@ -196,10 +198,10 @@ class ChoiceGameModel {
     
     func shuffleShapesQuickly(for duration: TimeInterval = 12.0) {
         let startTime = Date()
-        var interval: TimeInterval = 0.01
+        var interval: TimeInterval = 0.005
         func shuffleStep() {
             generateNewShapes()
-            interval += 0.005
+            interval += 0.001
             let totalTime = Date().timeIntervalSince(startTime)
             if totalTime < duration {
                 DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
