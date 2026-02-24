@@ -10,7 +10,6 @@ import SwiftUI
 struct IntroViews: View {
     
     @StateObject private var introModel = IntroModelViews(dialogues: dialogues)
-    @State var rotating: Bool = false
     @State var square: Bool = true
     @Binding var route: Navigation
 
@@ -32,7 +31,7 @@ struct IntroViews: View {
                 // MARK: Text
                     
                     Text(introModel.dialogues[introModel.count].text)
-                        .multilineTextAlignment(.leading)
+                    .multilineTextAlignment(.center)
                         .lineSpacing(4)
                         .font(.title2)
                         .foregroundStyle(Color.white)
@@ -47,7 +46,9 @@ struct IntroViews: View {
                     if introModel.count > 2 {
                             
                             Rectangle()
-                            .frame(width: introModel.count > 3 ? squareSize/2 : squareSize, height: introModel.count > 3 ? squareSize/2 : squareSize)
+                            .frame(width: introModel.count > 3 ? squareSize/2 : squareSize,
+                                   height: introModel.count > 3 ? squareSize/2 : squareSize)
+                        
                                 .foregroundStyle(Color.white)
                                 .opacity(introModel.shape && introModel.count < 4 ? 1.0 : 0.0)
                                 .position(
@@ -94,23 +95,19 @@ struct IntroViews: View {
                                 .zIndex(0)
                             
                         }
-                        
-                        Button("Voltar") {
-                            introModel.goBack( )
-                            if introModel.count < 3 {
-                                introModel.shape = false
-                                rotating = false
-                            }
-                        }
                     }
-//                }
+                
+                Button {
+                    introModel.advanceDialogue()
+                    } label: {
+                        Image(systemName: "arrowshape.forward.fill")
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 48))
+                            .bold()
+                    }.position(x: geox * 0.9, y: geoy * 0.9)
             }
             
-        }.onTapGesture {
-            introModel.advanceDialogue()
-            
-        }
-        .onChange(of: introModel.count) {
+        }.onChange(of: introModel.count) {
             introModel.shapeAppear()
             
         }

@@ -26,7 +26,7 @@ enum InGameText: Equatable {
             return ""
             
         case .tutorial:
-            return "Bring the choice down with a pinching gesture with your hands"
+            return "Use your finger to drag a choice and beggin your journey."
             
         case .intro:
             return "Some choices are really simple to deal with; others can be hard to make or accept."

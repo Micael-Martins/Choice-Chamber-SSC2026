@@ -64,7 +64,7 @@ struct ChoiceGame: View {
                                 ForEach(0..<model.columns, id: \.self) { col in
                                     ZStack {
                                         Rectangle()
-                                            .stroke(row < 2 && model.placedPiecesCount < 3 ? Color.white.opacity(0.05)
+                                            .stroke(row < 40 && model.placedPiecesCount < 14 ? Color.white.opacity(0.02)
                                                     : Color.white.opacity(0.00) , lineWidth: 1)
                                             .frame(width: !model.isEnded ? blockSize : blockSize / 4,
                                                    height: !model.isEnded ? blockSize : blockSize / 4)
@@ -75,7 +75,7 @@ struct ChoiceGame: View {
                                                 .fill(pieceColor)
                                                 .frame(width: !model.isEnded ? blockSize : blockSize / 4,
                                                        height: !model.isEnded ? blockSize : blockSize / 4)
-                                                .shadow(color: pieceColor, radius: 4)
+                                                .shadow(color: pieceColor, radius: 10)
                                         }
                                     }
                                 }
@@ -103,7 +103,12 @@ struct ChoiceGame: View {
                 .onChange(of: model.placedPiecesCount) {
                     if model.placedPiecesCount == 14 {
                        withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
-                           shake.toggle()
+                           shake = true
+                        }
+                        if model.placedPiecesCount != 14 {
+                            withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
+                                shake = false
+                             }
                         }
                     }
                 }

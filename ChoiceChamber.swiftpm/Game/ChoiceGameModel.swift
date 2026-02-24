@@ -196,12 +196,12 @@ class ChoiceGameModel {
         }
     }
     
-    func shuffleShapesQuickly(for duration: TimeInterval = 12.0) {
+    func shuffleShapesQuickly(for duration: TimeInterval = 6.0) {
         let startTime = Date()
         var interval: TimeInterval = 0.005
         func shuffleStep() {
             generateNewShapes()
-            interval += 0.001
+            interval += 0.05
             let totalTime = Date().timeIntervalSince(startTime)
             if totalTime < duration {
                 DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
