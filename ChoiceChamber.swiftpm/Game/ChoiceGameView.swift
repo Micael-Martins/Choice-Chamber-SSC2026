@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChoiceGame: View {
+struct ChoiceGameView: View {
 
     @Binding var route: Navigation
     
@@ -105,10 +105,9 @@ struct ChoiceGame: View {
                        withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
                            shake = true
                         }
-                        if model.placedPiecesCount != 14 {
-                            withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
-                                shake = false
-                             }
+                    } else {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            shake = false
                         }
                     }
                 }
@@ -145,7 +144,7 @@ struct ChoiceGame: View {
                             .bold()
                     }.position(x: geox * 0.9, y: geoy * 0.9)
                         .transition(.scale.combined(with: .opacity))
-                        .animation(.spring(response: 0.8, dampingFraction: 0.7), value: model.endButton)
+                        .animation(.easeInOut(duration: 1.0), value: model.placedPiecesCount)
                 }
                 
                 if model.isEnded {
@@ -176,6 +175,6 @@ struct ChoiceGame: View {
 }
 
 #Preview(traits: .landscapeLeft) {
-    ChoiceGame(route: .constant(.Game))
+    ChoiceGameView(route: .constant(.Game))
 }
 

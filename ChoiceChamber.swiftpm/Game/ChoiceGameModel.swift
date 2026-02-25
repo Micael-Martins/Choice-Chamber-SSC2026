@@ -12,7 +12,7 @@ import Observation
 class ChoiceGameModel {
     
     // Dimensões
-    let columns = 3
+    let columns = 5
     let rows = 40
     let maxShapes = 15
     var grid: [[Color?]]
@@ -78,7 +78,7 @@ class ChoiceGameModel {
         generateNewShapes()
         self.displayedDialogue = self.currentDialogue
         self.isVisible = false
-        self.grid[0][1] = .green
+        self.grid[0][2] = .green
         DispatchQueue.main.async {
             withAnimation(.easeInOut(duration: 0.6)) {
                 self.isVisible = true

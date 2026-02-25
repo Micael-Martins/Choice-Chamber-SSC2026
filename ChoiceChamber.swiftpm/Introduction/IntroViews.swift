@@ -113,7 +113,7 @@ struct IntroViews: View {
         }
         .onAppear {
             introModel.finish = {
-                withAnimation {
+                withAnimation(.easeInOut(duration: 1.0)) {
                     route = .Game
                 }
             }

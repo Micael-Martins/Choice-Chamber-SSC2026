@@ -20,7 +20,7 @@ let dialogues: [DialogueText] = [
     
     DialogueText(id: 3, text: "Welcome to the Choice Chamber. This is where choices materialize, no longer mere thoughts or words, but forms you can hold and place."),
     
-    DialogueText(id: 4, text: "They arrive in different forms. Some are simple, like a square. Others demand more attention to fit."),
+    DialogueText(id: 4, text: "Some shapes are simple, like a square. Others demand more attention to fit."),
     
     DialogueText(id: 5, text: "Your task is to choose which shape will build your tower."),
     

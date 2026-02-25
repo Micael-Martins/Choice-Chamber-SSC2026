@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct StartView: View {
     @Binding var route: Navigation
@@ -21,16 +22,13 @@ struct StartView: View {
                 
 
                     
-                    Text("Choice Chamber")
-                        .font(.system(size: posx * 0.050, weight: .bold))
-                        .foregroundStyle(Color.white)
-                        .shadow(color: Color.white.opacity(0.2), radius: 16, x: 0, y: 0)
-                        .position(x: posx * 0.5, y: posy * 0.45)
+                Image(.logo)
+                    .position(x: posx * 0.5, y: posy * 0.45)
 
                   Text("Press to continue...")
                         .font(.title)
                         .foregroundStyle(Color.white).opacity(0.3)
-                        .position(x: posx * 0.5, y: posy * 0.55)
+                        .position(x: posx * 0.5, y: posy * 0.6)
                         
                 
             }
