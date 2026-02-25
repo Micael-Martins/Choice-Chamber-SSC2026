@@ -31,7 +31,8 @@ let package = Package(
                 .landscapeLeft
             ],
             capabilities: [
-                .camera(purposeString: "Esse app usa a camera")
+                .camera(purposeString: "Esse app usa a camera"),
+                .fileAccess(.musicFolder, mode: .readOnly)
             ]
         )
     ],
@@ -39,6 +40,9 @@ let package = Package(
         .executableTarget(
             name: "AppModule",
             path: ".",
+            resources: [
+                .process("Resources")
+            ],
             swiftSettings: [
                 .enableUpcomingFeature("BareSlashRegexLiterals")
             ]

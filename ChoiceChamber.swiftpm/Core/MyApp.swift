@@ -6,7 +6,10 @@ struct MyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            SceneView()
+                .onAppear{
+                    SoundManager.shared.playBackgroundMusic(fileName: "a_Choicefull_felling")
+                }
         }
     }
 }

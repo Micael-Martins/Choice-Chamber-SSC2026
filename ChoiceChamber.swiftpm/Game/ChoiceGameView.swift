@@ -140,7 +140,7 @@ struct ChoiceGameView: View {
                     } label: {
                         Image(systemName: "minus.magnifyingglass")
                             .foregroundColor(Color.white)
-                            .font(.system(size: 48))
+                            .font(.system(size: 56))
                             .bold()
                     }.position(x: geox * 0.9, y: geoy * 0.9)
                         .transition(.scale.combined(with: .opacity))

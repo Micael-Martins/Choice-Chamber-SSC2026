@@ -11,6 +11,8 @@ import SpriteKit
 struct StartView: View {
     @Binding var route: Navigation
     
+    var soundManager = SoundManager.shared
+    
     var body: some View {
         ZStack {
             
@@ -20,8 +22,18 @@ struct StartView: View {
                 let posx: CGFloat = geo.size.width
                 let posy: CGFloat = geo.size.height
                 
-
-                    
+                Button {
+                    soundManager.toggleMute()
+                } label: {
+                    Image(systemName: soundManager.isMuted ? "music.note.slash" : "music.note")
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 56))
+                        .bold()
+                }.position(
+                    x: posx * 0.9,
+                    y: posy * 0.1
+                )
+                
                 Image(.logo)
                     .position(x: posx * 0.5, y: posy * 0.45)
 
