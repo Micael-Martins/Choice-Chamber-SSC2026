@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SpriteKit
 
 struct StartView: View {
     @Binding var route: Navigation
