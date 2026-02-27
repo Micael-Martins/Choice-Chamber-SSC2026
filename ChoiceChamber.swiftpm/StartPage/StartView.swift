@@ -25,7 +25,7 @@ struct StartView: View {
                 Button {
                     soundManager.toggleMute()
                 } label: {
-                    Image(systemName: soundManager.isMuted ? "music.note.slash" : "music.note")
+                    Image(systemName: soundManager.isMuted ? "speaker.slash.fill" : "speaker.fill")
                         .foregroundColor(Color.white)
                         .font(.system(size: 56))
                         .bold()

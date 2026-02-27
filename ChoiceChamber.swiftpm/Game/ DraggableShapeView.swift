@@ -18,7 +18,7 @@ struct DraggableShapeView: View {
     @State private var isDragging: Bool = false
     
     var currentBlockSize: CGFloat {
-        isDragging ? blockSize : blockSize * 0.25
+        isDragging ? blockSize : blockSize * 0.20
     }
     
     var body: some View {

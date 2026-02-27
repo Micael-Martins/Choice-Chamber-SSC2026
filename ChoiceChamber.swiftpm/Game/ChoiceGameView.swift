@@ -14,6 +14,7 @@ struct ChoiceGameView: View {
     @State var model = ChoiceGameModel()
     @State var finish = false
     @State private var shake: Bool = false
+    @State private var move = false
     
     var body: some View {
         ZStack {
@@ -22,8 +23,9 @@ struct ChoiceGameView: View {
                 let geoy: CGFloat = geo.size.height
                 let blockSize: CGFloat = geox * 0.08
                 
-                Color(.sceneBackground).ignoresSafeArea()                .overlay(
-                    RadialGradient(gradient: Gradient(colors: [.clear, Color.black.opacity(model.placedPiecesCount == 10 ? 0.7 : 0.0)]),
+                Color(.sceneBackground).ignoresSafeArea()
+                    .overlay(
+                        RadialGradient(gradient: Gradient(colors: [.clear, Color.black.opacity(model.placedPiecesCount > 9 && model.placedPiecesCount < 12 ? 0.7 : 0.0)]),
                                    center: .center,
                                    startRadius: 50,
                                    endRadius: 500)
@@ -38,12 +40,15 @@ struct ChoiceGameView: View {
                     Text(dialogue.text)
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
-                        .font(.title2)
+                        .font(.title)
                         .foregroundStyle(Color.white)
                         .bold()
                         .position(
-                            x:  !model.isEnded ? geox * 0.5 : geox * 0.75,
-                            y:  !model.isEnded ? geoy * 0.15 : geoy * 0.4)
+                            x: !model.isEnded ? geox * 0.5 : geox * 0.75,
+                            y: (model.placedPiecesCount == 15)
+                                ? geoy * 0.4
+                                : (!model.isEnded ? geoy * 0.15 : geoy * 0.4)
+                        )
                         .padding()
                         .frame(width: !model.isEnded ? 800 : 400,
                                 height: 400)
@@ -127,7 +132,26 @@ struct ChoiceGameView: View {
                         }
                     }
                     .position(x: geox * 0.5, y: geoy * 0.4) // Posiciona no topo
+//                    .transition(.asymmetric(insertion: .opacity, removal: .identity))
                     .zIndex(2) // Garante que as peças flutuem por cima do texto e da torre
+                }
+                
+// MARK: - Initial Tip
+                if model.placedPiecesCount == 0 {
+                    Image(systemName: "hand.tap.fill")
+                        .foregroundColor(Color.white)
+                        .font(.system(size: 56))
+                        .bold()
+                        .position(x: geox * 0.5,
+                                  y: move ? geoy * 0.7 : geoy * 0.4)
+                        .opacity(move ? 1 : 0)
+                        .animation(
+                            .easeInOut(duration: 3.0)
+                            .repeatForever(autoreverses: true),
+                            value: move)
+                        .onAppear {
+                            move.toggle()
+                        }
                 }
                 
 // MARK: - Navigation Buttons

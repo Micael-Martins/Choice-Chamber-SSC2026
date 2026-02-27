@@ -38,7 +38,7 @@ enum InGameText: Equatable {
             return "Some choices don’t resemble anything you’ve faced before. And you can’t immediately see where they belong."
             
         case .adapt:
-            return "But we can always adapt when the unexpected happens."
+            return "But you can always adapt when the unexpected happens."
             
         case .patience:
             return "When nothing feels right and your mind won’t settle, allow yourself to slow down..."

@@ -88,7 +88,11 @@ class ChoiceGameModel {
     
     //Atualiza as opções no topo da tela
     func generateNewShapes() {
-        currentShapes = Shape.generateTrio()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            withAnimation(.linear(duration: 0.35)) {
+                self.currentShapes = Shape.generateTrio()
+            }
+        }
     }
     
     func generateCrazyShapes() {
@@ -106,6 +110,8 @@ class ChoiceGameModel {
         }
         
         placedPiecesCount += 1
+        
+        currentShapes = []
         
         if placedPiecesCount == maxShapes {
             endButton = true

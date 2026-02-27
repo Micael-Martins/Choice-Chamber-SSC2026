@@ -33,11 +33,11 @@ struct IntroViews: View {
                     Text(introModel.dialogues[introModel.count].text)
                     .multilineTextAlignment(.center)
                         .lineSpacing(4)
-                        .font(.title2)
+                        .font(.title)
                         .foregroundStyle(Color.white)
                         .padding(.horizontal, 128)
                         .bold()
-                        .frame(height: 200)
+                        .frame(height: 250)
                         .opacity(introModel.isVisible ? 1.0 : 0.0)
                         .position(x: geox * 0.5, y: introModel.count > 2 ? geoy * 0.40 : geoy * 0.45)
                 
